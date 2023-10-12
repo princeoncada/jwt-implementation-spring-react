@@ -1,0 +1,12 @@
+version: '1.0'
+services:
+  mysql:
+    image: mysql:8.0.33
+    container_name: jwt-mysql
+    environment:
+      - 'MYSQL_DATABASE=db_jwt'
+      - 'MYSQL_PASSWORD=pass'
+      - 'MYSQL_ROOT_PASSWORD=root'
+      - 'MYSQL_USER=user'
+    ports:
+      - '3306:3306'

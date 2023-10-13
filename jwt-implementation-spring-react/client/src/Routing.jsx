@@ -1,7 +1,7 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import {useState} from "react";
-import Protected from "./Protected.jsx";
+import Protected from "./components/Protected.jsx";
 import Home from "./pages/Home.jsx";
 import Authenticate from "./redirect/Authenticate.jsx";
 import Logout from "./redirect/Logout.jsx";

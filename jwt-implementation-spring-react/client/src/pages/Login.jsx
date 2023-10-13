@@ -1,5 +1,4 @@
 import '../styles/Login.css';
-import axios from 'axios';
 
 function Login() {
     const handleGoogleLogin = () => {

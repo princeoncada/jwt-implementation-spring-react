@@ -32,7 +32,8 @@ class SecurityConfig(
             csrf { disable() }
             cors {  }
             authorizeHttpRequests {
-                authorize(anyRequest, authenticated)
+//                authorize(anyRequest, authenticated)
+                authorize(anyRequest, permitAll)
             }
             oauth2Login {
                 userInfoEndpoint {

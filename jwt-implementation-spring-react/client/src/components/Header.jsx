@@ -10,11 +10,11 @@ function Header() {
                     </Link>
                     <div>|</div>
                     <Link to="/about">
-                        <div className="nav__link">Stock Screen</div>
+                        <div className="nav__link">Screen</div>
                     </Link>
                     <div>|</div>
                     <Link to="/contact">
-                        <div className="nav__link">Stock Analysis</div>
+                        <div className="nav__link">Search</div>
                     </Link>
                     <div>|</div>
                     <Link to="/logout">

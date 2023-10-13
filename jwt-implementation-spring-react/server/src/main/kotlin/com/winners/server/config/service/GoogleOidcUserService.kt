@@ -8,7 +8,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser
 import org.springframework.stereotype.Service
 
 @Service
-class CustomOidcUserService (
+class GoogleOidcUserService (
     @Qualifier("oidcUserService")
     private val delegate: OidcUserService
 ): OidcUserService() {

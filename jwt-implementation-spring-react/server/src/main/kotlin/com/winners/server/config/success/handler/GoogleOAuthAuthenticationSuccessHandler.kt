@@ -1,6 +1,5 @@
-package com.winners.server.config
+package com.winners.server.config.success.handler
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.winners.server.config.service.CustomUserDetailsService
 import com.winners.server.config.service.JwtService
 import jakarta.servlet.http.Cookie

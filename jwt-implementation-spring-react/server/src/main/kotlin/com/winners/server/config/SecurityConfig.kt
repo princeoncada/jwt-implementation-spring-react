@@ -1,7 +1,9 @@
 package com.winners.server.config
 
+import com.winners.server.config.authentication.filter.JwtAuthenticationFilter
+import com.winners.server.config.authentication.provider.GoogleOAuthAuthenticationProvider
 import com.winners.server.config.service.*
-import com.winners.server.domain.repository.UserRepository
+import com.winners.server.config.success.handler.GoogleOAuthAuthenticationSuccessHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager

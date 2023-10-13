@@ -1,11 +1,12 @@
-package com.winners.server.config.service
+package com.winners.server.config.authentication.filter
 
+import com.winners.server.config.service.CustomUserDetails
+import com.winners.server.config.service.CustomUserDetailsService
+import com.winners.server.config.service.JwtService
 import io.jsonwebtoken.Claims
 import jakarta.servlet.FilterChain
-import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.core.annotation.Order
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder

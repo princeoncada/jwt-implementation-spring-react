@@ -1,12 +1,12 @@
-package com.winners.server.config.service
+package com.winners.server.config.authentication.provider
 
+import com.winners.server.config.service.CustomUserDetails
 import com.winners.server.domain.repository.UserRepository
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken
-import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 
 @Service

@@ -9,11 +9,11 @@ function Header() {
                         <div className="nav__link">Home</div>
                     </Link>
                     <div>|</div>
-                    <Link to="/about">
+                    <Link to="/stock/screen">
                         <div className="nav__link">Screen</div>
                     </Link>
                     <div>|</div>
-                    <Link to="/contact">
+                    <Link to="/stock/search">
                         <div className="nav__link">Search</div>
                     </Link>
                     <div>|</div>

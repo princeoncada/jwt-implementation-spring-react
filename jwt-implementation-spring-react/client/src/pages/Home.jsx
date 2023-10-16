@@ -20,7 +20,6 @@ function Home() {
             <main>
                 <h1>Home</h1>
                 <p>This is the home page</p>
-                <button onClick={logToken}>View Token</button>
             </main>
             <Footer/>
         </>

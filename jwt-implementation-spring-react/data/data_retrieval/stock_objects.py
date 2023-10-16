@@ -33,11 +33,16 @@ statistics_obj = {
     ]
 }
 
-show = ["financials", "balance-sheet", "cash-flow", "key-statistics"]
-
 show_int = {
     "income_statement": 0,
     "balance_sheet": 1,
     "cash_flow": 2,
     "statistics": 3
 }
+
+show = [
+    "financials",
+    "balance-sheet",
+    "cash-flow",
+    "key-statistics"
+]

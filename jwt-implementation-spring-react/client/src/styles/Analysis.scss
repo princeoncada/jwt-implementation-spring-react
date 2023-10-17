@@ -24,13 +24,11 @@
     .stock-summary {
         flex: 1;
         padding: 10px;
-        min-height: 120px;
-        max-height: 120px;
     }
     .stock-financial {
         display: flex;
         flex-direction: column;
-        flex: 5;
+        flex: 8;
 
         .table {
             flex: 1;
@@ -65,8 +63,6 @@
         flex: 1;
         padding: 10px;
         border: 1px solid #ddd;
-        height: 90%;
-        width: 94%;
     }
 
     .item:hover {
@@ -98,7 +94,7 @@
             flex: 1;
             .stock-name {
                 display: flex;
-                align-items: center;
+                align-items: end;
                 flex: 1;
                 font-size: 3rem;
                 font-weight: 600;
@@ -154,27 +150,6 @@
                 padding-top: 0.5rem;
                 text-align: center;
                 font-size: 1rem;
-            }
-
-            /* Define color classes for the score */
-            .score-1 {
-                background-color: #ff0000; /* Red for score 1 */
-            }
-
-            .score-2 {
-                background-color: #ff3300; /* Orange for score 2 */
-            }
-
-            .score-3 {
-                background-color: #ff5900; /* Orange-Yellow for score 3 */
-            }
-
-            .score-4 {
-                background-color: #d5cd3d; /* Yellow for score 4 */
-            }
-
-            .score-5 {
-                background-color: #26b426; /* Green for score 5 */
             }
         }
     }

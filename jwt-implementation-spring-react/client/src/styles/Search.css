@@ -5,6 +5,7 @@
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   margin: 20px;
+  min-width: 702px;
 }
 
 h2 {
@@ -114,6 +115,11 @@ div.score-growth {
 div.score-label {
   text-align: center;
   font-size: 0.8rem;
+}
+
+/* Define color classes for the score */
+.score-0 {
+  background-color: #830000; /* Red for score 1 */
 }
 
 /* Define color classes for the score */

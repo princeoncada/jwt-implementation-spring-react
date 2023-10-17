@@ -24,13 +24,11 @@
 .stock-view-container .first .stock-summary {
   flex: 1;
   padding: 10px;
-  min-height: 120px;
-  max-height: 120px;
 }
 .stock-view-container .first .stock-financial {
   display: flex;
   flex-direction: column;
-  flex: 5;
+  flex: 8;
 }
 .stock-view-container .first .stock-financial .table {
   flex: 1;
@@ -61,8 +59,6 @@
   flex: 1;
   padding: 10px;
   border: 1px solid #ddd;
-  height: 90%;
-  width: 94%;
 }
 .financial-navigation .item:hover {
   background-color: #ddd;
@@ -91,7 +87,7 @@
 }
 .stock-summary .contents .stock-identity .stock-name {
   display: flex;
-  align-items: center;
+  align-items: end;
   flex: 1;
   font-size: 3rem;
   font-weight: 600;
@@ -117,7 +113,6 @@
   flex: 0.5;
   /* Style for the score value */
   /* Style for the score label */
-  /* Define color classes for the score */
 }
 .stock-summary .contents .stock-score .score {
   display: flex;
@@ -141,21 +136,6 @@
   padding-top: 0.5rem;
   text-align: center;
   font-size: 1rem;
-}
-.stock-summary .contents .stock-score .score-1 {
-  background-color: #ff0000; /* Red for score 1 */
-}
-.stock-summary .contents .stock-score .score-2 {
-  background-color: #ff3300; /* Orange for score 2 */
-}
-.stock-summary .contents .stock-score .score-3 {
-  background-color: #ff5900; /* Orange-Yellow for score 3 */
-}
-.stock-summary .contents .stock-score .score-4 {
-  background-color: #d5cd3d; /* Yellow for score 4 */
-}
-.stock-summary .contents .stock-score .score-5 {
-  background-color: #26b426; /* Green for score 5 */
 }
 
 /*# sourceMappingURL=Analysis.css.map */

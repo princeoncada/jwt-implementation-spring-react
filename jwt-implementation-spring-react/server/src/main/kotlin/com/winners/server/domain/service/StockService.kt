@@ -1,5 +1,6 @@
 package com.winners.server.domain.service
 
+import com.winners.server.application.dto.StockDTOs
 import com.winners.server.domain.model.Stock
 import org.springframework.stereotype.Service
 import java.util.*
@@ -7,5 +8,6 @@ import java.util.*
 @Service
 interface StockService {
     fun getStockByTicker(ticker: String): Stock
+    fun getTopStocks(): List<StockDTOs.GetResult>
     fun isExpired(stock: Stock): Boolean
 }

@@ -4,16 +4,18 @@ class StockDTOs {
     data class GetResult(
         val id: String,
         val ticker: String,
-        val stockData: String,
+        val name: String,
+        val price: Double,
         val growth: Int,
         val dividend: Int,
         val value: Int,
-        val total: Int,
-        val expiry: String
+        val total: Int
     )
 
     data class PutRequest(
+        val name: String,
         val stockData: String,
+        val price: Double,
         val growth: Int,
         val dividend: Int,
         val value: Int,
@@ -22,8 +24,10 @@ class StockDTOs {
     )
 
     data class PostRequest(
+        val name: String,
         val ticker: String,
         val stockData: String,
+        val price: Double,
         val growth: Int,
         val dividend: Int,
         val value: Int,

@@ -16,6 +16,12 @@ data class Stock(
     @Column(name = "ticker", nullable = false, unique = true)
     val ticker: String,
 
+    @Column(name = "name", nullable = false, unique = true)
+    val name: String,
+
+    @Column(name = "price", nullable = false)
+    val price: Double,
+
     @Column(name = "stock_data", nullable = false, columnDefinition = "MEDIUMTEXT")
     val stockData: String,
 

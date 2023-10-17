@@ -15,12 +15,12 @@ class StockMapper: EntityMapper<Stock, StockDTOs.GetResult, StockDTOs.PostReques
         return StockDTOs.GetResult(
             id = entity.id,
             ticker = entity.ticker,
-            stockData = entity.stockData,
+            name = entity.name,
+            price = entity.price,
             growth = entity.growth,
             dividend = entity.dividend,
             value = entity.value,
             total = entity.total,
-            expiry = entity.expiry.toString()
         )
     }
 
@@ -31,7 +31,9 @@ class StockMapper: EntityMapper<Stock, StockDTOs.GetResult, StockDTOs.PostReques
         return Stock(
             id = id,
             ticker = entityRequest.ticker,
+            name = entityRequest.name,
             stockData = entityRequest.stockData,
+            price = entityRequest.price,
             growth = entityRequest.growth,
             dividend = entityRequest.dividend,
             value = entityRequest.value,
@@ -49,7 +51,9 @@ class StockMapper: EntityMapper<Stock, StockDTOs.GetResult, StockDTOs.PostReques
         return Stock(
             id = entity.id,
             ticker = entity.ticker,
+            name = entityRequest.name,
             stockData = entityRequest.stockData,
+            price = entityRequest.price,
             growth = entityRequest.growth,
             dividend = entityRequest.dividend,
             value = entityRequest.value,

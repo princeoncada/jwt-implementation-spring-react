@@ -7,8 +7,8 @@ function List({ data }) {
                 return (
                     key !== 'Address' ?
                         <div className="list-item" key={key}><span className="strong">{key}</span>: {value}</div> :
-                        <div className="list-item" key={key}><span className="strong">{key}</span>: {`${value["Street"]} ${value["City"]}, ${value["State"]} ${value["Zip"]} ${value["Country"]} `}
-                        </div>
+                        value != null ? <div className="list-item" key={key}><span className="strong">{key}</span>: {`${value["Street"]} ${value["City"]}, ${value["State"]} ${value["Zip"]} ${value["Country"]} `}
+                        </div> : <></>
                 )
             })}
         </div>

@@ -1,7 +1,7 @@
 CREATE TABLE tbl_stock_statistics(
      id VARCHAR(36) NOT NULL PRIMARY KEY,
      ticker VARCHAR(255) UNIQUE NOT NULL,
-     stock_id VARCHAR(36) NOT NULL REFERENCES tbl_stocks(id),
+     stock_id VARCHAR(36) NOT NULL REFERENCES tbl_stocks(id) ON DELETE CASCADE,
      trailing_pe DOUBLE NOT NULL,
      price_sales DOUBLE NOT NULL,
      price_book DOUBLE NOT NULL,

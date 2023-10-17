@@ -1,6 +1,3 @@
-import re
-
-
 def calculate_ratios(income_statement_df, cash_flow_df, statistics_dict):
     ebit = income_statement_df.at[0, "EBIT"]
     interest_expense = income_statement_df.at[0, "Interest Expense"]
@@ -18,19 +15,6 @@ def calculate_ratios(income_statement_df, cash_flow_df, statistics_dict):
     statistics_dict["Debt Coverage Ratio"] = oi / interest_expense
 
     return statistics_dict
-
-
-def modify_statistics_keys(statistics_dict):
-    modified_statistics_dict = {}
-    for key, value in statistics_dict.items():
-        if key == "Trailing P/E":
-            modified_statistics_dict["trailing_pe"] = value
-        else:
-            # Modify other keys as needed (e.g., replace '/' with underscores and remove special characters)
-            modified_key = key.replace('/', ' ').replace(' ', '_')
-            modified_key = re.sub(r'[^\w\s]', '', modified_key).lower()
-            modified_statistics_dict[modified_key] = value
-    return modified_statistics_dict
 
 
 def convert_to_float(value):

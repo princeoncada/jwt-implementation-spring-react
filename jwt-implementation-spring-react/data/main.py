@@ -1,9 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from data_processing import stock_data_parser
+from data_retrieval.stock_scraper import scrape
+from data_processing.stock_parser import parser
 import uvicorn
 
 from selenium import webdriver
+
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--headless")
 driver = webdriver.Chrome(options=chrome_options)
@@ -30,14 +32,16 @@ async def root():
 
 
 @app.get("/stock/{ticker}")
-async def get_stock_data(ticker: str):
-    data = {}
+async def fetch_stock_data(ticker: str):
+    result_data = {}
     try:
-        data = stock_data_parser.parse_stock_data(ticker)
+        stock_data = scrape(ticker)
+        result_data = parser(stock_data, ticker)
     except Exception as e:
-        data = {"error": "Ticker not found"}
+        result_data = {"error": e}
     finally:
-        return data
+        return result_data
+
 
 if __name__ == '__main__':
     uvicorn.run(app, port=2000, host='localhost')

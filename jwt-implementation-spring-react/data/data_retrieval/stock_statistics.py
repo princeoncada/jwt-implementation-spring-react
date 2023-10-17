@@ -1,10 +1,17 @@
-def get_statistic(num, show_list, header_list, ticker, driver):
-    url = f"https://finance.yahoo.com/quote/{ticker}/{show_list[num]}?p={ticker}"
-    driver.get(url)
-    inner_dictionary = {}
-    for header in header_list:
-        xpath = f'//td/span[contains(text(), "{header}")]/../following-sibling::td'
-        data = driver.find_element("xpath", xpath)
-        inner_dictionary[header] = data.text
-    return inner_dictionary
+from selenium.common import TimeoutException
+from selenium.webdriver import Chrome
+
+
+def statistics(url, headers, options):
+    with Chrome(options=options) as driver:
+        driver.get(url)
+        try:
+            inner_dictionary = {}
+            for header in headers:
+                xpath = f'//td/span[contains(text(), "{header}")]/../following-sibling::td'
+                data = driver.find_element("xpath", xpath)
+                inner_dictionary[header] = data.text
+            return inner_dictionary
+        except TimeoutException:
+            return None
 

@@ -1,6 +1,8 @@
 package com.winners.server.impl.domain.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.winners.server.application.dto.StockDTOs
+import com.winners.server.application.mapper.StockMapper
 import com.winners.server.domain.model.Stock
 import com.winners.server.domain.model.StockStatistics
 import com.winners.server.domain.repository.StockRepository
@@ -17,6 +19,7 @@ class StockServiceImpl(
     private val fastApiService: FastApiService,
     private val stockRepository: StockRepository,
     private val stockStatisticsRepository: StockStatisticsRepository,
+    private val stockMapper: StockMapper,
     private val objectMapper: ObjectMapper
 ): StockService {
     override fun getStockByTicker(ticker: String): Stock {
@@ -30,17 +33,19 @@ class StockServiceImpl(
                     val stockData = fastApiService.fetchStockData(ticker).body!!
                     val stockJsonNode = objectMapper.readTree(stockData)
 
-                    val newStock = Stock(
+                    val newStock = stockMapper.createEntity(
                         id = stock.get().id,
-                        ticker = stock.get().ticker,
-                        stockData = stockData,
-                        growth = stockJsonNode["score"]["growth"].asInt(),
-                        dividend = stockJsonNode["score"]["dividend"].asInt(),
-                        value = stockJsonNode["score"]["value"].asInt(),
-                        total = stockJsonNode["score"]["total"].asInt(),
-                        expiry = LocalDateTime.now().plusDays(7),
-                        createdAt = stock.get().createdAt,
-                        updatedAt = Instant.now()
+                        entityRequest = StockDTOs.PostRequest(
+                            ticker = stock.get().ticker,
+                            name = stock.get().name,
+                            stockData = stockData,
+                            price = stockJsonNode["details"]["Price"].asDouble(),
+                            growth = stockJsonNode["score"]["growth"].asInt(),
+                            dividend = stockJsonNode["score"]["dividend"].asInt(),
+                            value = stockJsonNode["score"]["value"].asInt(),
+                            total = stockJsonNode["score"]["total"].asInt(),
+                            expiry = LocalDateTime.now().plusDays(7).toString()
+                        )
                     )
 
                     val newStockStatistics = StockStatistics(
@@ -79,17 +84,19 @@ class StockServiceImpl(
                 val stockData = fastApiService.fetchStockData(ticker).body!!
                 val stockJsonNode = objectMapper.readTree(stockData)
 
-                val newStock = Stock(
+                val newStock = stockMapper.createEntity(
                     id = UUID.randomUUID().toString(),
-                    ticker = ticker,
-                    stockData = stockData,
-                    growth = stockJsonNode["score"]["growth"].asInt(),
-                    dividend = stockJsonNode["score"]["dividend"].asInt(),
-                    value = stockJsonNode["score"]["value"].asInt(),
-                    total = stockJsonNode["score"]["total"].asInt(),
-                    expiry = LocalDateTime.now().plusDays(7),
-                    createdAt = Instant.now(),
-                    updatedAt = Instant.now()
+                    entityRequest = StockDTOs.PostRequest(
+                        ticker = ticker,
+                        name = stockJsonNode["details"]["Name"].asText(),
+                        stockData = stockData,
+                        price = stockJsonNode["details"]["Price"].asDouble(),
+                        growth = stockJsonNode["score"]["growth"].asInt(),
+                        dividend = stockJsonNode["score"]["dividend"].asInt(),
+                        value = stockJsonNode["score"]["value"].asInt(),
+                        total = stockJsonNode["score"]["total"].asInt(),
+                        expiry = LocalDateTime.now().plusDays(7).toString()
+                    )
                 )
 
                 val newStockStatistics = StockStatistics(
@@ -122,6 +129,10 @@ class StockServiceImpl(
                 throw Exception("Error occurred during process stock not present / Error: ${e.message}")
             }
         }
+    }
+
+    override fun getTopStocks(): List<StockDTOs.GetResult> {
+        return stockRepository.findAll().sortedByDescending { it.total }.take(10).map { stockMapper.toGetResult(it) }
     }
 
     override fun isExpired(stock: Stock): Boolean {

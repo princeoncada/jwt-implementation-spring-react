@@ -1,42 +1,29 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import '../styles/Search.css';
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
+import axios from "axios";
 
 function Search() {
     const [query, setQuery] = useState('');
-    const [results, setResults] = useState([
-        {
-            "ticker": "GOOGL",
-            "name": "Alphabet",
-            "score": {
-                "div": 3,
-                "val": 4,
-                "growth": 5
-            },
-            "price": 2754.39
-        },
-        {
-            "ticker": "MSFT",
-            "name": "Microsoft",
-            "score": {
-                "div": 3,
-                "val": 4,
-                "growth": 4
-            },
-            "price": 325.25
-        },
-        {
-            "ticker": "AMZN",
-            "name": "Amazon",
-            "score": {
-                "div": 2,
-                "val": 4,
-                "growth": 5
-            },
-            "price": 3360.99
-        }
-    ]);
+    const [results, setResults] = useState([]);
+
+    useEffect(() => {
+        axios.get(`http://localhost:8000/api/stock/top`)
+            .then((response) => {
+                console.log(response.data)
+                setResults(response.data)
+            })
+            .catch((error) => {
+                console.log("API:", error);
+            })
+    }, [])
+
+    function handleChange(e){
+        const value = e.target.value;
+        const sanitizedValue = value.replace(/[^A-Z]/g, "");
+        setQuery(sanitizedValue);
+    }
 
     return (
         <>
@@ -49,37 +36,41 @@ function Search() {
                                 type="text"
                                 placeholder="Enter a stock ticker symbol..."
                                 value={query}
-                                onChange={(e) => setQuery(e.target.value)}
+                                onChange={(e) => handleChange(e)}
                             />
-                            <button>Search</button>
+                            <button
+                                onClick={() => {
+                                    window.location.href = `/stock/view/${query}`
+                                }}
+                            >Search</button>
                         </div>
                         <h3>Recommended Stocks</h3>
                         <ul className="search-results">
                             {results.map((result, index) => (
-                                <li onClick={() => {
-                                    console.log(result.name);
+                                <li key={result.id} onClick={() => {
+                                    window.location.href = `/stock/view/${result["ticker"]}`
                                 }} className="result-item">
                                     <div className="result-left">
-                                        <span>{`${result.ticker}`}</span>
+                                        <span>{`${result["ticker"]}`}</span>
                                         <span>{`|`}</span>
                                         <span>{`${result.name}`}</span>
                                     </div>
                                     <div className="result-middle">
                                         <div className="score">
-                                            <div className={`score-value score-${result.score.val}`}>{result.score.val}</div>
+                                            <div className={`score-value score-${result.value}`}>{result.value}</div>
                                             <div className="score-label">Value</div>
                                         </div>
                                         <div className="score">
-                                            <div className={`score-div score-${result.score.div}`}>{result.score.div}</div>
+                                            <div className={`score-div score-${result.dividend}`}>{result.dividend}</div>
                                             <div className="score-label">Dividend</div>
                                         </div>
                                         <div className="score">
-                                            <div className={`score-growth score-${result.score.growth}`}>{result.score.growth}</div>
+                                            <div className={`score-growth score-${result.growth}`}>{result.growth}</div>
                                             <div className="score-label">Growth</div>
                                         </div>
                                     </div>
                                     <div className="result-right">
-                                        <p>$ {result.price}</p>
+                                        <p>${result.price}</p>
                                     </div>
                                 </li>
                             ))}

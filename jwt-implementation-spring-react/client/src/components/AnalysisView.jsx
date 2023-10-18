@@ -1,5 +1,5 @@
-import Table from "../components/Table.jsx";
-import List from "../components/List.jsx";
+import Table from "./Table.jsx";
+import List from "./List.jsx";
 import React, {useState} from "react";
 
 function AnalysisView({ stockData }) {

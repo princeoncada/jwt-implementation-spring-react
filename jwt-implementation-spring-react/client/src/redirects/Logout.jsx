@@ -2,17 +2,22 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 
-function Logout({ setAuthenticated }) {
+function Logout() {
     const navigate = useNavigate();
-    Cookies.remove("jwtToken");
 
     useEffect(() => {
-        setAuthenticated(false);
-        navigate("/")
+        Cookies.remove("jwtToken");
+        sessionStorage.removeItem("auth")
+        const delayDuration = 2000;
+        const timeoutId = setTimeout(() => {
+            navigate("/home");
+        }, delayDuration);
+        return () => clearTimeout(timeoutId);
     }, []);
 
     return (
         <main>
+            <p>Logging out...</p>
         </main>
     )
 }

@@ -1,6 +1,6 @@
 import './styles/App.css'
-import Routing from "./Routing.jsx";
-import Home from "./pages/Home.jsx";
+import Routing from "./routing/Routing.jsx";
+import {useState} from "react";
 
 function App() {
   return (

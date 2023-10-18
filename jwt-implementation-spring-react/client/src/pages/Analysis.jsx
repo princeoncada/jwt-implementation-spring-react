@@ -6,7 +6,7 @@ import React, {useEffect, useState} from "react";
 import List from "../components/List.jsx";
 import {useParams} from "react-router-dom";
 import axios from "axios";
-import AnalysisView from "./AnalysisView.jsx";
+import AnalysisView from "../components/AnalysisView.jsx";
 
 function Analysis() {
     const { ticker } = useParams();

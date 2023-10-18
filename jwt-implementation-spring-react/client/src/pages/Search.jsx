@@ -3,6 +3,8 @@ import '../styles/Search.css';
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
 import axios from "axios";
+import StockResult from "../components/StockResult.jsx";
+import Cookies from "js-cookie";
 
 function Search() {
     const [query, setQuery] = useState('');
@@ -45,37 +47,7 @@ function Search() {
                             >Search</button>
                         </div>
                         <h3>Recommended Stocks</h3>
-                        <ul className="search-results">
-                            {results.map((result, index) => (
-                                <li key={result.id} onClick={() => {
-                                    window.location.href = `/stock/view/${result["ticker"]}`
-                                }} className="result-item">
-                                    <div className="result-left">
-                                        <span>{`${result["ticker"]}`}</span>
-                                        <span>{`|`}</span>
-                                        <span>{`${result.name}`}</span>
-                                    </div>
-                                    <div className="result-middle">
-                                        <div className="score">
-                                            <div className={`score-value score-${result.value}`}>{result.value}</div>
-                                            <div className="score-label">Value</div>
-                                        </div>
-                                        <div className="score">
-                                            <div className={`score-div score-${result.dividend}`}>{result.dividend}</div>
-                                            <div className="score-label">Dividend</div>
-                                        </div>
-                                        <div className="score">
-                                            <div className={`score-growth score-${result.growth}`}>{result.growth}</div>
-                                            <div className="score-label">Growth</div>
-                                        </div>
-                                    </div>
-                                    <div className="result-right">
-                                        <p>${result.price}</p>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-
+                        <StockResult stockData={results} />
                     </div>
                 </main>
             <Footer />

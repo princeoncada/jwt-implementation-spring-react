@@ -7,7 +7,7 @@ function Authenticate({ setAuthenticated }) {
 
     useEffect(() => {
         if(Cookies.get("jwtToken")!==undefined) {
-            setAuthenticated(true)
+            sessionStorage.setItem("auth", "true")
         }
         const delayDuration = 2000;
         const timeoutId = setTimeout(() => {

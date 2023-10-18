@@ -1,18 +1,28 @@
+import numpy as np
+
+
 def calculate_ratios(income_statement_df, cash_flow_df, statistics_dict):
     ebit = income_statement_df.at[0, "EBIT"]
     interest_expense = income_statement_df.at[0, "Interest Expense"]
-    statistics_dict["Interest Coverage Ratio"] = ebit / interest_expense
+    interest_coverage_ratio = ebit / interest_expense
 
     ocf = cash_flow_df.at[0, "Operating Cash Flow"]
     net_income = income_statement_df.at[0, "Net Income"]
-    statistics_dict["Operating Cash Flow / Net Income Ratio"] = ocf / net_income
+    operating_cash_flow_net_income_ratio = ocf / net_income
 
     fcf = cash_flow_df.at[0, "Free Cash Flow"]
     ebitda = income_statement_df.at[0, "EBITDA"]
-    statistics_dict["Free Cash Flow Conversion"] = fcf / ebitda
+    free_cash_flow_conversion = fcf / ebitda
 
     oi = income_statement_df.at[0, "Operating Income"]
-    statistics_dict["Debt Coverage Ratio"] = oi / interest_expense
+    debt_coverage_ratio = oi / interest_expense
+
+    statistics_dict["Interest Coverage Ratio"] = interest_coverage_ratio if not np.isinf(interest_coverage_ratio) else 0
+    statistics_dict["Operating Cash Flow / Net Income Ratio"] = operating_cash_flow_net_income_ratio if not np.isinf(
+        operating_cash_flow_net_income_ratio) else 0
+    statistics_dict["Free Cash Flow Conversion"] = free_cash_flow_conversion if not np.isinf(
+        free_cash_flow_conversion) else 0
+    statistics_dict["Debt Coverage Ratio"] = debt_coverage_ratio if not np.isinf(debt_coverage_ratio) else 0
 
     return statistics_dict
 
@@ -25,6 +35,8 @@ def convert_to_float(value):
         if (value.replace('.', '', 1).isdigit()
                 or (value.startswith('-') and value[1:].replace('.', '', 1).isdigit())):
             return float(value)
+        if value.endswith('k'):
+            return float(value[:-1]) * 10 ** 3
     return value  # Convert all other cases, including "N/A" and non-numeric values, to 0.0
 
 

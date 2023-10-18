@@ -51,12 +51,14 @@ class StockController(
     }
 
     @PostMapping("/test")
-    fun test(@RequestBody body: Map<String, List<Double>>) {
+    fun test(@RequestBody body: Map<String, List<Double>>): ResponseEntity<List<Stock>> {
         return try {
-            val stocks = stockStatisticsService.findStocksWithDynamicFilters(body)
-            println(stocks)
+            val stocks = mutableListOf<Stock>()
+            val data = stockStatisticsService.findStocksWithDynamicFilters(body)
+            data.forEach { stocks.add(it.stock) }
+            ResponseEntity.ok(stocks)
         } catch (e: Exception) {
-            println(e)
+            ResponseEntity.notFound().build()
         }
     }
 }

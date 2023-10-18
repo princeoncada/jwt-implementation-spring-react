@@ -3,6 +3,7 @@ from time import perf_counter
 import pandas as pd
 from data_processing.stock_formulas import (calculate_ratios, convert_percentage_to_decimal,
                                             convert_to_float, stock_score)
+from data_retrieval.stock_scraper import scrape
 
 
 def parser(stock_data, ticker):
@@ -55,6 +56,6 @@ def parser(stock_data, ticker):
 
 if __name__ == "__main__":
     start = perf_counter()
-    print(json.dumps(parser("AAPL"), indent=4))
+    print(json.dumps(parser(scrape("PLTR"), "PLTR"), indent=4))
     end = perf_counter()
     print(f"Time elapsed: {end - start}")

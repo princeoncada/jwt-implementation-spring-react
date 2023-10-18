@@ -53,6 +53,6 @@ def scrape(ticker):
 
 if __name__ == "__main__":
     start = perf_counter()
-    print(json.dumps(scrape("AAPL"), indent=4))
+    print(json.dumps(scrape("PLTR"), indent=4))
     end = perf_counter()
     print(f"Time elapsed: {end - start}")

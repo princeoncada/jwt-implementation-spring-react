@@ -138,4 +138,27 @@ class StockServiceImpl(
     override fun isExpired(stock: Stock): Boolean {
         return stock.expiry.isBefore(LocalDateTime.now())
     }
+
+    override fun getMinMaxValues(): MutableMap<String, DoubleArray> {
+        val minMaxValues = stockStatisticsRepository.findMinMaxValues()
+        val minMaxValuesMap = mutableMapOf<String, DoubleArray>()
+
+        minMaxValuesMap["trailing_pe"] = doubleArrayOf(minMaxValues["min_trailing_pe"]!!.toDouble(), minMaxValues["max_trailing_pe"]!!.toDouble())
+        minMaxValuesMap["price_sales"] = doubleArrayOf(minMaxValues["min_price_sales"]!!.toDouble(), minMaxValues["max_price_sales"]!!.toDouble())
+        minMaxValuesMap["price_book"] = doubleArrayOf(minMaxValues["min_price_book"]!!.toDouble(), minMaxValues["max_price_book"]!!.toDouble())
+        minMaxValuesMap["enterprise_value_ebitda"] = doubleArrayOf(minMaxValues["min_enterprise_value_ebitda"]!!.toDouble(), minMaxValues["max_enterprise_value_ebitda"]!!.toDouble())
+        minMaxValuesMap["return_on_equity"] = doubleArrayOf(minMaxValues["min_return_on_equity"]!!.toDouble(), minMaxValues["max_return_on_equity"]!!.toDouble())
+        minMaxValuesMap["quarterly_revenue_growth"] = doubleArrayOf(minMaxValues["min_quarterly_revenue_growth"]!!.toDouble(), minMaxValues["max_quarterly_revenue_growth"]!!.toDouble())
+        minMaxValuesMap["quarterly_earnings_growth"] = doubleArrayOf(minMaxValues["min_quarterly_earnings_growth"]!!.toDouble(), minMaxValues["max_quarterly_earnings_growth"]!!.toDouble())
+        minMaxValuesMap["total_debt_equity"] = doubleArrayOf(minMaxValues["min_total_debt_equity"]!!.toDouble(), minMaxValues["max_total_debt_equity"]!!.toDouble())
+        minMaxValuesMap["forward_annual_dividend_yield"] = doubleArrayOf(minMaxValues["min_forward_annual_dividend_yield"]!!.toDouble(), minMaxValues["max_forward_annual_dividend_yield"]!!.toDouble())
+        minMaxValuesMap["trailing_annual_dividend_yield"] = doubleArrayOf(minMaxValues["min_trailing_annual_dividend_yield"]!!.toDouble(), minMaxValues["max_trailing_annual_dividend_yield"]!!.toDouble())
+        minMaxValuesMap["payout_ratio"] = doubleArrayOf(minMaxValues["min_payout_ratio"]!!.toDouble(), minMaxValues["max_payout_ratio"]!!.toDouble())
+        minMaxValuesMap["interest_coverage_ratio"] = doubleArrayOf(minMaxValues["min_interest_coverage_ratio"]!!.toDouble(), minMaxValues["max_interest_coverage_ratio"]!!.toDouble())
+        minMaxValuesMap["operating_cash_flow_net_income_ratio"] = doubleArrayOf(minMaxValues["min_operating_cash_flow_net_income_ratio"]!!.toDouble(), minMaxValues["max_operating_cash_flow_net_income_ratio"]!!.toDouble())
+        minMaxValuesMap["free_cash_flow_conversion"] = doubleArrayOf(minMaxValues["min_free_cash_flow_conversion"]!!.toDouble(), minMaxValues["max_free_cash_flow_conversion"]!!.toDouble())
+        minMaxValuesMap["debt_coverage_ratio"] = doubleArrayOf(minMaxValues["min_debt_coverage_ratio"]!!.toDouble(), minMaxValues["max_debt_coverage_ratio"]!!.toDouble())
+
+        return minMaxValuesMap
+    }
 }

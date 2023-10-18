@@ -10,4 +10,5 @@ interface StockService {
     fun getStockByTicker(ticker: String): Stock
     fun getTopStocks(): List<StockDTOs.GetResult>
     fun isExpired(stock: Stock): Boolean
+    fun getMinMaxValues(): MutableMap<String, DoubleArray>
 }

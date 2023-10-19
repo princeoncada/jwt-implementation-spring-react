@@ -33,6 +33,11 @@
 .stock-view-container .first .stock-financial .table {
   flex: 1;
 }
+.stock-view-container .first .btn-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
 
 .stock-view-container .second {
   display: flex;

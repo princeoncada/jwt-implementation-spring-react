@@ -1,6 +1,15 @@
 import Table from "./Table.jsx";
 import List from "./List.jsx";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {Button, styled} from "@mui/material";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import axios from "axios";
+import Cookies from "js-cookie";
+
+const CustomButton = styled(Button)({
+    flex: "1"
+})
 
 function AnalysisView({ stockData }) {
 
@@ -9,6 +18,59 @@ function AnalysisView({ stockData }) {
         balanceSheet: false,
         cashFlow: false,
     });
+
+    const [userHas, setUserHas] = useState(false);
+
+    useEffect(() => {
+        axios.get(`http://localhost:8000/api/user/stock/${stockData.details["Ticker"]}`, {
+            headers: {
+                Authorization: `Bearer ${Cookies.get("jwtToken")}`,
+                "Content-Type": "application/json",
+                Accept: "*/*"
+            }
+        })
+            .then((response) => {
+                setUserHas(response.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, []);
+
+    function handleAddStock() {
+        axios.post(`http://localhost:8000/api/user/stock`, {
+            "ticker": stockData.details["Ticker"]
+        },{
+            headers: {
+                Authorization: `Bearer ${Cookies.get("jwtToken")}`,
+                "Content-Type": "application/json",
+                Accept: "*/*"
+            }
+        })
+            .then((response) => {
+                setUserHas(true)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    function handleRemoveStock() {
+        axios.delete(`http://localhost:8000/api/user/stock/${stockData.details["Ticker"]}`, {
+            headers: {
+                Authorization: `Bearer ${Cookies.get("jwtToken")}`,
+                "Content-Type": "application/json",
+                Accept: "*/*"
+            }
+        })
+            .then((response) => {
+                setUserHas(false)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
     function handleView(element) {
         if (element === 'incomeStatement') {
             setFinancialView({
@@ -58,6 +120,24 @@ function AnalysisView({ stockData }) {
                             <div className="stock-price">${stockData.details["Price"]}</div>
                         </div>
                     </div>
+
+                    <div className="btn-container">
+                        {
+                            !userHas ? <CustomButton
+                                variant="contained"
+                                onClick={() => { handleAddStock() }}
+                            >
+                                <AddCircleIcon /> &nbsp;&nbsp; Add Stock
+                            </CustomButton> : <CustomButton
+                                variant="contained"
+                                color="error"
+                                onClick={() => { handleRemoveStock() }}
+                            >
+                                <RemoveCircleIcon /> &nbsp;&nbsp; Remove Stock
+                            </CustomButton>
+                        }
+                    </div>
+
                     <div className={`stock-financial`}>
                         <div className={`financial-navigation`}>
 

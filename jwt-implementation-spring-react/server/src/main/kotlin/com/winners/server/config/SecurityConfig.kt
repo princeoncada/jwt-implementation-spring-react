@@ -4,6 +4,8 @@ import com.winners.server.config.authentication.filter.JwtAuthenticationFilter
 import com.winners.server.config.authentication.provider.GoogleOAuthAuthenticationProvider
 import com.winners.server.config.service.*
 import com.winners.server.config.success.handler.GoogleOAuthAuthenticationSuccessHandler
+import com.winners.server.domain.repository.RoleRepository
+import com.winners.server.domain.repository.UserRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -23,6 +25,8 @@ import org.springframework.web.filter.CorsFilter
 @EnableWebSecurity
 class SecurityConfig(
     private val jwtService: JwtService,
+    private val userRepository: UserRepository,
+    private val roleRepository: RoleRepository,
     private val customUserDetailsService: CustomUserDetailsService,
     private val googleOAuthAuthenticationProvider: GoogleOAuthAuthenticationProvider
 ) {
@@ -70,6 +74,8 @@ class SecurityConfig(
         return GoogleOAuthAuthenticationSuccessHandler(
             googleOAuthAuthenticationManager(googleOAuthAuthenticationProvider),
             customUserDetailsService,
+            userRepository,
+            roleRepository,
             jwtService
         )
     }

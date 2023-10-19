@@ -1,5 +1,6 @@
 package com.winners.server.application.rest
 
+import com.winners.server.application.dto.StockDTOs
 import com.winners.server.application.dto.UserStockDTOs
 import com.winners.server.domain.model.Stock
 import com.winners.server.domain.service.UserStockService
@@ -14,15 +15,24 @@ class UserStockController(
     private val userStockService: UserStockService
 ) {
     @GetMapping
-    fun getStocksByUser(): ResponseEntity<List<Stock>> {
+    fun getStocksByUser(): ResponseEntity<List<StockDTOs.GetResult>> {
         return try {
-            val stocks = mutableListOf<Stock>()
             val authentication: Authentication = SecurityContextHolder.getContext().authentication
             val userStocks = userStockService.getStocksByUser(authentication.name)
-            userStocks.forEach {
-                stocks.add(it.stock)
-            }
-            ResponseEntity.ok(stocks)
+            ResponseEntity.ok(userStocks)
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().build()
+        }
+    }
+
+    @GetMapping("/{ticker}")
+    fun hasStock(
+        @PathVariable ticker: String
+    ): ResponseEntity<Boolean> {
+        return try {
+            val authentication: Authentication = SecurityContextHolder.getContext().authentication
+            val hasStock = userStockService.hasStock(authentication.name, ticker)
+            ResponseEntity.ok(hasStock)
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }

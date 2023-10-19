@@ -2,6 +2,9 @@ package com.winners.server.config.success.handler
 
 import com.winners.server.config.service.CustomUserDetailsService
 import com.winners.server.config.service.JwtService
+import com.winners.server.domain.model.User
+import com.winners.server.domain.repository.RoleRepository
+import com.winners.server.domain.repository.UserRepository
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -9,10 +12,14 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler
+import java.time.Instant
+import java.util.UUID
 
 class GoogleOAuthAuthenticationSuccessHandler(
     private val authenticationManager: AuthenticationManager,
     private val customUserDetailsService: CustomUserDetailsService,
+    private val userRepository: UserRepository,
+    private val roleRepository: RoleRepository,
     private val jwtService: JwtService,
 ): AuthenticationSuccessHandler {
     override fun onAuthenticationSuccess(
@@ -23,7 +30,16 @@ class GoogleOAuthAuthenticationSuccessHandler(
         try {
             authenticationManager.authenticate(authentication)
         } catch (e: Exception) {
-            throw BadCredentialsException("User not found with email: ${authentication?.name}")
+            val newUser = User(
+                id = UUID.randomUUID().toString(),
+                role = roleRepository.findByName("USER").get(),
+                email = authentication?.name!!,
+                password = "",
+                createdAt = Instant.now(),
+                updatedAt = Instant.now(),
+            )
+            userRepository.save(newUser)
+            authenticationManager.authenticate(authentication)
         }
 
         val userDetails = customUserDetailsService.loadUserByUsername(authentication?.name!!)

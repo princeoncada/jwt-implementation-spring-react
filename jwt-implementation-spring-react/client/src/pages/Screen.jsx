@@ -78,7 +78,13 @@ function Screen() {
 
     useEffect(() => {
         if (isLoading) {
-            axios.get("http://localhost:8000/api/stock/minmax")
+            axios.get("http://localhost:8000/api/stock/minmax", {
+                headers: {
+                    Authorization: `Bearer ${Cookies.get("jwtToken")}`,
+                    "Content-Type": "application/json",
+                    Accept: "*/*"
+                }
+            })
                 .then(response => {
                     let value = response.data
 
@@ -102,6 +108,7 @@ function Screen() {
                 .catch(error => {
                     console.log(error)
                     setIsLoading(false)
+                    window.location.href = "/logout"
                 })
         }
 
@@ -144,9 +151,11 @@ function Screen() {
 
         console.log(resultFilter)
 
-        axios.post("http://localhost:8000/api/stock/test", resultFilter, {
+        axios.post("http://localhost:8000/api/stock/test", resultFilter,  {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${Cookies.get("jwtToken")}`,
+                "Content-Type": "application/json",
+                Accept: "*/*"
             }
         })
             .then(response => {
@@ -155,6 +164,7 @@ function Screen() {
             })
             .catch(error => {
                 console.log(error)
+                window.location.href = "/logout"
             })
     }
 

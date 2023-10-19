@@ -5,19 +5,27 @@ import Footer from "../components/Footer.jsx";
 import axios from "axios";
 import StockResult from "../components/StockResult.jsx";
 import Cookies from "js-cookie";
+import {Navigate} from "react-router-dom";
 
 function Search() {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/stock/top`)
+        axios.get(`http://localhost:8000/api/stock/top`,  {
+                headers: {
+                    Authorization: `Bearer ${Cookies.get("jwtToken")}`,
+                    "Content-Type": "application/json",
+                    Accept: "*/*"
+                }
+        })
             .then((response) => {
                 console.log(response.data)
                 setResults(response.data)
             })
             .catch((error) => {
                 console.log("API:", error);
+                window.location.href = "/logout"
             })
     }, [])
 

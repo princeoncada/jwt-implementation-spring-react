@@ -52,7 +52,7 @@ class JwtAuthenticationFilter(
             filterChain.doFilter(request, response)
         } catch (e: Exception) {
             println(e)
-            response.sendRedirect("http://localhost:5000/logout")
+            response.sendError(401, "Invalid token")
         }
     }
 }

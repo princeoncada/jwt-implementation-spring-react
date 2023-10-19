@@ -7,6 +7,7 @@ import List from "../components/List.jsx";
 import {useParams} from "react-router-dom";
 import axios from "axios";
 import AnalysisView from "../components/AnalysisView.jsx";
+import Cookies from "js-cookie";
 
 function Analysis() {
     const { ticker } = useParams();
@@ -17,7 +18,13 @@ function Analysis() {
         if(!isLoading) {
             setIsLoading(true)
             console.log("Requesting Data...")
-            axios.get(`http://localhost:8000/api/stock/${ticker}`)
+            axios.get(`http://localhost:8000/api/stock/${ticker}`, {
+                    headers: {
+                        Authorization: `Bearer ${Cookies.get("jwtToken")}`,
+                        "Content-Type": "application/json",
+                        Accept: "*/*"
+                    }
+            })
                 .then((response) => {
                     const jsonObject = JSON.parse(response.data["stockData"]);
                     setStockData(jsonObject)
@@ -27,6 +34,7 @@ function Analysis() {
                 .catch((error) => {
                     setIsLoading(false);
                     console.log("API:", error);
+                    // window.location.href = "/logout"
                 })
         }
     }, []);

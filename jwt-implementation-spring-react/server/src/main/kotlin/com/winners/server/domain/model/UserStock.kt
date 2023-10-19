@@ -8,7 +8,7 @@ import java.util.UUID
 data class UserStock(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    val id: UUID?,
+    val id: String,
 
     @Column(name = "ticker", nullable = false)
     val ticker: String,

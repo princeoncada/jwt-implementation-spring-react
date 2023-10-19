@@ -11,7 +11,7 @@ from data_retrieval.stock_details import details
 
 def assign(url, key, headers):
     options = ChromeOptions()
-    options.add_argument("--headless")
+    # options.add_argument("--headless")
     options.add_argument("--disable-extensions")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--no-sandbox")

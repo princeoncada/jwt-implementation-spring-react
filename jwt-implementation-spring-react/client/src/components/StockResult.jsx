@@ -1,6 +1,8 @@
 import React from "react";
 import {Button, styled} from "@mui/material";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const CustomButton = styled(Button)({
     marginLeft: "1rem",
@@ -9,7 +11,23 @@ const CustomButton = styled(Button)({
     minWidth: "45px",
 });
 
-function StockResult({ stockData, watchlist = false }) {
+function StockResult({ stockData, loadStockData, watchlist = false }) {
+    function handleRemoveStock(ticker) {
+        axios.delete(`http://localhost:8000/api/user/stock/${ticker}`, {
+            headers: {
+                Authorization: `Bearer ${Cookies.get("jwtToken")}`,
+                "Content-Type": "application/json",
+                Accept: "*/*"
+            }
+        })
+            .then((response) => {
+                loadStockData()
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
     return (
         <ul className="search-results">
             {stockData.map((result) => (
@@ -45,6 +63,7 @@ function StockResult({ stockData, watchlist = false }) {
                             <CustomButton
                                 variant="contained"
                                 color="error"
+                                onClick={() => { handleRemoveStock(result["ticker"]) }}
                             >
                                 <VisibilityOffIcon />
                             </CustomButton>

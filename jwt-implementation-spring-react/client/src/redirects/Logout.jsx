@@ -1,23 +1,20 @@
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 
 function Logout() {
-    const navigate = useNavigate();
-
     useEffect(() => {
         Cookies.remove("jwtToken");
         sessionStorage.removeItem("auth")
         const delayDuration = 2000;
         const timeoutId = setTimeout(() => {
-            navigate("/home");
+            window.location.href = "/";
         }, delayDuration);
         return () => clearTimeout(timeoutId);
     }, []);
 
     return (
         <main>
-            <p>Logging out...</p>
+            <p>Logging Out...</p>
         </main>
     )
 }

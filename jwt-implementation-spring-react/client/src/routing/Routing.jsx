@@ -14,13 +14,28 @@ function Routing() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={ sessionStorage.getItem("auth") === "true" ? <Navigate to="/home"/> : <Login />} />
-                <Route path="/stock/screen" element={<Screen />} />
-                <Route path="/stock/search" element={<Search />} />
-                <Route path="/stock/view/:ticker" element={<Analysis />} />
+
+                <Route path="/stock/search" element={
+                    <Protected>
+                        <Search/>
+                    </Protected>
+                } />
 
                 <Route path="/home" element={
                     <Protected>
                         <Home/>
+                    </Protected>
+                } />
+
+                <Route path="/stock/screen" element={
+                    <Protected>
+                        <Screen/>
+                    </Protected>
+                } />
+
+                <Route path="/stock/view/:ticker" element={
+                    <Protected>
+                        <Analysis/>
                     </Protected>
                 } />
 

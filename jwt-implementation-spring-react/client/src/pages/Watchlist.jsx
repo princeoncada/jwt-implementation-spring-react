@@ -8,7 +8,7 @@ import StockResult from "../components/StockResult.jsx";
 function Watchlist() {
     const [stockData, setStockData] = useState([]);
 
-    useEffect(() => {
+    function loadUserStocks() {
         axios.get(`http://localhost:8000/api/user/stock`, {
             headers: {
                 Authorization: `Bearer ${Cookies.get("jwtToken")}`,
@@ -17,13 +17,16 @@ function Watchlist() {
             }
         })
             .then((response) => {
-                console.log(response.data)
                 setStockData(response.data)
             })
             .catch((error) => {
                 console.log("API:", error);
                 window.location.href = "/logout"
             })
+    }
+
+    useEffect(() => {
+        loadUserStocks()
     }, []);
 
     return (
@@ -32,7 +35,11 @@ function Watchlist() {
             <main>
                 <div className="stock-screen">
                     <h2>Watchlist</h2>
-                    <StockResult stockData={stockData} watchlist={true}/>
+                    <StockResult
+                        stockData={stockData}
+                        watchlist={true}
+                        loadStockData={loadUserStocks}
+                    />
                 </div>
             </main>
             <Footer/>

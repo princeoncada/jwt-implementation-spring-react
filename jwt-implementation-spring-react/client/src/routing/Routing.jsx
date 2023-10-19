@@ -2,7 +2,7 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import Login from "../pages/Login.jsx";
 import {useState} from "react";
 import Protected from "../components/Protected.jsx";
-import Home from "../pages/Home.jsx";
+import Watchlist from "../pages/Watchlist.jsx";
 import Authenticate from "../redirects/Authenticate.jsx";
 import Logout from "../redirects/Logout.jsx";
 import Analysis from "../pages/Analysis.jsx";
@@ -20,7 +20,7 @@ function Routing() {
 
                 <Route path="/home" element={
                     <Protected>
-                        <Home/>
+                        <Watchlist/>
                     </Protected>
                 } />
 

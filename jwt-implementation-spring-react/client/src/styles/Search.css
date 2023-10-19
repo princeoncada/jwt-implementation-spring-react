@@ -41,16 +41,30 @@ button:hover {
   background-color: #0056b3;
 }
 
-.search-results li {
+.search-results .result-item {
   margin: 10px 0;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 3px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
-
-.search-results li:hover {
+.search-results .result-item:hover {
   background-color: #f5f5f5;
+}
+.search-results .result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 40rem;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  padding: 10px 30px;
+}
+
+.result-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 /* Style for each score container */
@@ -66,17 +80,6 @@ div.result-right {
   text-align: right;
   font-weight: bold;
   font-size: 1.2em;
-}
-
-/* Style for each result item */
-li.result-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 40rem;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  padding: 10px 30px;
 }
 
 /* Style for the left section (name) */

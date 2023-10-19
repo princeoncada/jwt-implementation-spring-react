@@ -1,7 +1,10 @@
 package com.winners.server.impl.domain.service
 
+import com.winners.server.application.dto.StockDTOs
 import com.winners.server.application.dto.UserStockDTOs
+import com.winners.server.application.mapper.StockMapper
 import com.winners.server.application.mapper.UserStockMapper
+import com.winners.server.domain.model.Stock
 import com.winners.server.domain.model.UserStock
 import com.winners.server.domain.repository.UserStockRepository
 import com.winners.server.domain.service.UserStockService
@@ -11,12 +14,18 @@ import java.util.*
 @Service
 class UserStockServiceImpl(
     private val userStockRepository: UserStockRepository,
-    private val userStockMapper: UserStockMapper
+    private val userStockMapper: UserStockMapper,
+    private val stockMapper: StockMapper
 ): UserStockService {
     override fun getStocksByUser(
         email: String
-    ): List<UserStock> {
-        return userStockRepository.findByUserEmail(email)
+    ): List<StockDTOs.GetResult> {
+        val stocks = mutableListOf<Stock>()
+        val userStocks = userStockRepository.findByUserEmail(email)
+        userStocks.forEach {
+            stocks.add(it.stock)
+        }
+        return stocks.map { stockMapper.toGetResult(it) }
     }
     override fun addStockToUser(
         email: String,
